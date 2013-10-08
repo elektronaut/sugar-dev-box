@@ -1,4 +1,4 @@
-$ar_databases = ['activerecord_unittest', 'activerecord_unittest2']
+$ar_databases = ['sugar_development', 'sugar_test']
 $as_vagrant   = 'sudo -u vagrant -H bash -l -c'
 $home         = '/home/vagrant'
 
@@ -47,7 +47,7 @@ class install_mysql {
     require => Class['mysql::server']
   }
 
-  database_grant { ['rails@localhost/activerecord_unittest', 'rails@localhost/activerecord_unittest2']:
+  database_grant { ['rails@localhost/sugar_development', 'rails@localhost/sugar_test']:
     privileges => ['all'],
     require    => Database_user['rails@localhost']
   }
@@ -108,6 +108,14 @@ package { 'build-essential':
 }
 
 package { 'git-core':
+  ensure => installed
+}
+
+package { 'openjdk-6-jdk':
+  ensure => installed
+}
+
+package { 'redis-server':
   ensure => installed
 }
 

@@ -1,55 +1,54 @@
-# A Virtual Machine for Ruby on Rails Core Development
-
-## Introduction
-
-This project automates the setup of a development environment for working on Ruby on Rails itself. Use this virtual machine to work on a pull request with everything ready to hack and run the test suites.
-
-Please note this virtual machine is not designed to be used for Rails application development.
+# sugar-dev-box
 
 ## Requirements
 
 * [VirtualBox](https://www.virtualbox.org)
 
-* [Vagrant 1.1+](http://vagrantup.com) (not a Ruby gem)
+* [Vagrant 1.1+](http://vagrantup.com)
 
-## How To Build The Virtual Machine
+## Setup
 
-Building the virtual machine is this easy:
+First, build the virtual machine. This might take a few minutes:
 
-    host $ git clone https://github.com/rails/rails-dev-box.git
-    host $ cd rails-dev-box
+    host $ git clone https://github.com/elektronaut/sugar-dev-box.git
+    host $ cd sugar-dev-box
     host $ vagrant up
 
-That's it.
+Clone your Sugar fork into the same directory:
 
-If the base box is not present that command fetches it first. The setup itself takes about 3 minutes in my MacBook Air. After the installation has finished, you can access the virtual machine with
+    host $ git clone git@github.com:<username>/sugar.git
+
+Vagrant mounts this directory as _/vagrant_ within the virtual machine. Log in with:
 
     host $ vagrant ssh
     Welcome to Ubuntu 12.04 LTS (GNU/Linux 3.2.0-23-generic-pae i686)
     ...
-    vagrant@rails-dev-box:~$
+    vagrant@sugar-dev-box:~$
 
-Port 3000 in the host computer is forwarded to port 3000 in the virtual machine. Thus, applications running in the virtual machine can be accessed via localhost:3000 in the host computer.
+On the VM, run Bundler to install the rest of the dependencies, create the configuration
+and populate the database with:
 
-## What's In The Box
+    vm $ cd /vagrant/sugar
+    vm $ bundle
+    vm $ rake sugar:configure
+    vm $ rake db:migrate
 
-* Git
+## Starting the development server
 
-* RVM
+    host $ vagrant ssh
+    vm $ cd /vagrant/sugar
+    vm $ sunspot-solr start
+    vm $ rails server
 
-* Ruby 2.0.0 (binary RVM install)
+The development server is now accessible on [localhost:3000](http://localhost:3000/).
 
-* Bundler
+## Running the tests
 
-* SQLite3, MySQL, and Postgres
+    host $ vagrant ssh
+    vm $ cd /vagrant/sugar
+    vm $ guard
 
-* System dependencies for nokogiri, sqlite3, mysql, mysql2, and pg
-
-* Databases and users needed to run the Active Record test suite
-
-* Node.js for the asset pipeline
-
-* Memcached
+Guard will now automatically run the tests whenever you change anything.
 
 ## Recommended Workflow
 
@@ -57,25 +56,7 @@ The recommended workflow is
 
 * edit in the host computer and
 
-* test within the virtual machine.
-
-Just clone your Rails fork into the rails-dev-box directory on the host computer:
-
-    host $ ls
-    README.md   Vagrantfile puppet
-    host $ git clone git@github.com:<your username>/rails.git
-
-Vagrant mounts that directory as _/vagrant_ within the virtual machine:
-
-    vagrant@rails-dev-box:~$ ls /vagrant
-    puppet  rails  README.md  Vagrantfile
-
-Install gem dependencies in there:
-
-    vagrant@rails-dev-box:~$ cd /vagrant/rails
-    vagrant@rails-dev-box:/vagrant/rails$ bundle
-
-We are ready to go to edit in the host, and test in the virtual machine.
+* run and test within the virtual machine.
 
 This workflow is convenient because in the host computer you normally have your editor of choice fine-tuned, Git configured, and SSH keys in place.
 
@@ -109,6 +90,12 @@ Finally, to completely wipe the virtual machine from the disk **destroying all i
 
 Please check the [Vagrant documentation](http://docs.vagrantup.com/v2/) for more information on Vagrant.
 
+## Credits
+
+Based on [rails-dev-box](https://github.com/rails/rails-dev-box) by Xavier Noria
+
 ## License
 
-Released under the MIT License, Copyright (c) 2012–<i>ω</i> Xavier Noria.
+Released under the MIT License.
+Original work Copyright (c) 2012-ω Xavier Noria
+Modified work Copyright 2013 Inge Jørgensen
