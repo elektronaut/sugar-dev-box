@@ -32,6 +32,7 @@ and populate the database with:
     vm $ bundle
     vm $ rake sugar:configure
     vm $ rake db:migrate
+    vm $ rake db:migrate RAILS_ENV=test
 
 ## Starting the development server
 
@@ -46,9 +47,7 @@ The development server is now accessible on [localhost:3000](http://localhost:30
 
     host $ vagrant ssh
     vm $ cd /vagrant/sugar
-    vm $ guard
-
-Guard will now automatically run the tests whenever you change anything.
+    vm $ RAILS_ENV=test rspec spec
 
 ## Recommended Workflow
 
