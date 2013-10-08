@@ -129,6 +129,11 @@ package { 'nodejs':
   ensure => installed
 }
 
+# Sugar dependencies
+package { ['libmagic-dev']:
+  ensure => installed
+}
+
 # --- Ruby ---------------------------------------------------------------------
 
 exec { 'install_rvm':
