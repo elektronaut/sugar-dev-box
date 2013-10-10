@@ -30,7 +30,6 @@ and populate the database with:
 
     vm $ cd /vagrant/sugar
     vm $ bundle
-    vm $ rake sugar:configure
     vm $ rake db:migrate
     vm $ rake db:migrate RAILS_ENV=test
 
