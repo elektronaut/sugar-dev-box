@@ -30,15 +30,21 @@ and populate the database with:
 
     vm $ cd /vagrant/sugar
     vm $ bundle
-    vm $ bundle exec rake db:migrate
-    vm $ bundle exec rake db:migrate RAILS_ENV=test
+    vm $ bin/rake db:create
+    vm $ bin/rake db:migrate
+
+To run the tests, you also need to create the test database:
+
+    vm $ bin/rake db:create RAILS_ENV=test
+    vm $ bin/rake db:migrate RAILS_ENV=test
+
 
 ## Starting the development server
 
     host $ vagrant ssh
     vm $ cd /vagrant/sugar
-    vm $ bundle exec sunspot-solr start
-    vm $ bundle exec rails server
+    vm $ bin/sunspot-solr start
+    vm $ bin/rails server -b 0.0.0.0
 
 The development server is now accessible on [localhost:3000](http://localhost:3000/).
 
@@ -46,7 +52,7 @@ The development server is now accessible on [localhost:3000](http://localhost:30
 
     host $ vagrant ssh
     vm $ cd /vagrant/sugar
-    vm $ bundle exec rspec
+    vm $ bin/rspec
 
 ## Recommended Workflow
 
