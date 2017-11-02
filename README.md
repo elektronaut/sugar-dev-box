@@ -43,7 +43,7 @@ To run the tests, you also need to create the test database:
 
     host $ vagrant ssh
     vm $ cd /vagrant/sugar
-    vm $ bin/sunspot-solr start
+    vm $ bin/rake sunspot:solr:start
     vm $ bin/rails server -b 0.0.0.0
 
 The development server is now accessible on [localhost:3000](http://localhost:3000/).
