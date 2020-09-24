@@ -1,5 +1,9 @@
 # sugar-dev-box
 
+**NOTE: This project is discontinued and has been archived.  
+I recommend using [Docker Compose](https://docs.docker.com/compose/) with the main 
+[Sugar repository](https://github.com/elektronaut/sugar) instead**
+
 ## Requirements
 
 * [VirtualBox](https://www.virtualbox.org)
